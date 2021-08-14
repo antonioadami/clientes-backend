@@ -25,11 +25,11 @@ export default class CreateClientService {
     email,
     password,
   }: IRequest): Promise<IClientModel> {
-    // const checkUserExists = await this.usersRepository.findByEmail(email);
+    const checkClientExists = await this.clientsRepository.findByEmail(email);
 
-    // if (checkUserExists) {
-    //   throw new AppError('Email address already used');
-    // }
+    if (checkClientExists) {
+      throw new AppError('Email address already used');
+    }
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
