@@ -6,8 +6,6 @@ import session from '@shared/infra/neo4j-driver/index';
 
 export default class ClientsRepository implements IClientsRepository {
   public async create(data: ICreateClientDTO): Promise<IClientModel> {
-    console.log(data);
-
     const result = await session.run(
       'CREATE(c: Client{name: $name, email: $email, password: $password, cpf: $cpf, telefone: $telefone}) RETURN c',
       data,
@@ -28,5 +26,12 @@ export default class ClientsRepository implements IClientsRepository {
     }
 
     return null;
+  }
+
+  public async findAll(): Promise<IClientModel[]> {
+    const result = await session.run('MATCH (c: Client) RETURN c');
+
+    const clients = result.records.map(client => client.get(0).properties);
+    return clients;
   }
 }

@@ -4,4 +4,5 @@ import IClientModel from '../models/IClientModel';
 export default interface IClientsRepository {
   create(data: ICreateClientDTO): Promise<IClientModel>;
   findByEmail(email: string): Promise<IClientModel>;
+  findAll(): Promise<IClientModel[]>;
 }
