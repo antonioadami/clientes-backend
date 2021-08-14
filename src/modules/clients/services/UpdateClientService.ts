@@ -8,7 +8,7 @@ import IClientsRepository from '../repositories/IClientsRepository';
 import ICreateClientDTO from '../dtos/ICreateClientDTO';
 
 @injectable()
-export default class CreateClientService {
+export default class UpdateClientService {
   constructor(
     @inject('HashProvider')
     private hashProvider: IHashProvider,
@@ -25,13 +25,16 @@ export default class CreateClientService {
   }: ICreateClientDTO): Promise<IClientModel> {
     const checkClientExists = await this.clientsRepository.findByCPF(cpf);
 
-    if (checkClientExists) {
-      throw new AppError('CPF already used');
+    if (!checkClientExists) {
+      throw new AppError('Client CPF does not exists');
     }
 
-    const hashedPassword = await this.hashProvider.generateHash(password);
+    let hashedPassword: string = null;
+    if (password) {
+      hashedPassword = await this.hashProvider.generateHash(password);
+    }
 
-    const client = await this.clientsRepository.create({
+    const client = await this.clientsRepository.update({
       name,
       email,
       password: hashedPassword,

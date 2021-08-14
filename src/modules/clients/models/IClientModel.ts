@@ -2,6 +2,6 @@ export default interface IClientModel {
   name: string;
   email: string;
   password: string;
-  telefone: string;
+  phone: string;
   cpf: string;
 }

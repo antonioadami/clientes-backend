@@ -3,5 +3,5 @@ export default interface ICreateClientDTO {
   email: string;
   password: string;
   cpf: string;
-  telefone: string;
+  phone: string;
 }

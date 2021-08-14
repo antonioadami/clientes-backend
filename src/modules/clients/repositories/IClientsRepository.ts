@@ -3,6 +3,7 @@ import IClientModel from '../models/IClientModel';
 
 export default interface IClientsRepository {
   create(data: ICreateClientDTO): Promise<IClientModel>;
-  findByEmail(email: string): Promise<IClientModel>;
+  update(data: ICreateClientDTO): Promise<IClientModel>;
+  findByCPF(cpf: string): Promise<IClientModel>;
   findAll(): Promise<IClientModel[]>;
 }
