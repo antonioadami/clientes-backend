@@ -5,12 +5,8 @@ import AppError from '@shared/errors/AppError';
 import IClientModel from '../models/IClientModel';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IClientsRepository from '../repositories/IClientsRepository';
+import ICreateClientDTO from '../dtos/ICreateClientDTO';
 
-interface IRequest {
-  name: string;
-  email: string;
-  password: string;
-}
 @injectable()
 export default class CreateClientService {
   constructor(
@@ -24,7 +20,9 @@ export default class CreateClientService {
     name,
     email,
     password,
-  }: IRequest): Promise<IClientModel> {
+    cpf,
+    telefone,
+  }: ICreateClientDTO): Promise<IClientModel> {
     const checkClientExists = await this.clientsRepository.findByEmail(email);
 
     if (checkClientExists) {
@@ -37,7 +35,11 @@ export default class CreateClientService {
       name,
       email,
       password: hashedPassword,
+      cpf,
+      telefone,
     });
+
+    delete client.password;
 
     return client;
   }

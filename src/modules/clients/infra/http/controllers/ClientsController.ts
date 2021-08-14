@@ -6,13 +6,7 @@ export default class ClientsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const createClientService = container.resolve(CreateClientService);
 
-    const { name, email, password } = request.body;
-
-    const client = await createClientService.execute({
-      name,
-      email,
-      password,
-    });
+    const client = await createClientService.execute(request.body);
 
     return response.status(200).json(client);
   }
