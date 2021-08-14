@@ -5,7 +5,15 @@
       "target": "es6",
       "moduleResolution": "node",
       "sourceMap": true,
-      "outDir": "dist"
+      "outDir": "dist",
+      "baseUrl": "./src",
+      "paths": {
+        "@modules/*": ["modules/*"],
+        "@config/*": ["config/*"],
+        "@shared/*": ["shared/*"]
+      },
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
     },
     "lib": ["es2015"]
   }
