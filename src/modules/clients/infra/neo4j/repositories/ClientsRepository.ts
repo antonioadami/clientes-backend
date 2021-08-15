@@ -7,7 +7,7 @@ import session from '@shared/infra/neo4j-driver/index';
 export default class ClientsRepository implements IClientsRepository {
   public async create(data: ICreateClientDTO): Promise<IClientModel> {
     const result = await session.run(
-      'CREATE(c: Client{name: $name, email: $email, password: $password, cpf: $cpf, phone: $phone}) RETURN c',
+      'CREATE(c: Client{name: $name, email: $email, password: $password, cpf: $cpf, phone: $phone, age: $age}) RETURN c',
       data,
     );
 
