@@ -56,4 +56,18 @@ export default class ClientsRepository implements IClientsRepository {
     const clients = result.records.map(client => client.get(0).properties);
     return clients;
   }
+
+  public async delete(cpf: string): Promise<string> {
+    const result = await session.run(
+      'MATCH (c: Client{cpf: $cpf}) DELETE c RETURN c',
+      {
+        cpf,
+      },
+    );
+
+    if (result.records.length > 0) {
+      return cpf;
+    }
+    return null;
+  }
 }

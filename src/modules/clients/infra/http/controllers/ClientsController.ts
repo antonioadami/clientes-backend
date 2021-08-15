@@ -7,6 +7,7 @@ import AppError from '@shared/errors/AppError';
 import CreateClientService from '@modules/clients/services/CreateClientService';
 import ListAllClientsService from '@modules/clients/services/ListAllClientsService';
 import UpdateClientService from '@modules/clients/services/UpdateClientService';
+import DeleteClientService from '@modules/clients/services/DeleteClientService';
 
 export default class ClientsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -75,5 +76,15 @@ export default class ClientsController {
     });
 
     return response.status(200).json(client);
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const deleteClientService = container.resolve(DeleteClientService);
+
+    const { cpf } = request.params;
+
+    await deleteClientService.execute(cpf);
+
+    return response.status(204).json();
   }
 }

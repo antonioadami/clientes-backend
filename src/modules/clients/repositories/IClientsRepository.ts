@@ -6,4 +6,5 @@ export default interface IClientsRepository {
   update(data: ICreateClientDTO): Promise<IClientModel>;
   findByCPF(cpf: string): Promise<IClientModel>;
   findAll(): Promise<IClientModel[]>;
+  delete(cpf: string): Promise<string>;
 }
