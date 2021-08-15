@@ -8,6 +8,7 @@ import CreateClientService from '@modules/clients/services/CreateClientService';
 import ListAllClientsService from '@modules/clients/services/ListAllClientsService';
 import UpdateClientService from '@modules/clients/services/UpdateClientService';
 import DeleteClientService from '@modules/clients/services/DeleteClientService';
+import FindClientByCPFService from '@modules/clients/services/FindClientByCPFService';
 
 export default class ClientsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -43,6 +44,22 @@ export default class ClientsController {
     const listAllClientsService = container.resolve(ListAllClientsService);
 
     const clients = await listAllClientsService.execute();
+
+    return response.status(200).json(clients);
+  }
+
+  public async findByCPF(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const findClientByCPFService = container.resolve(FindClientByCPFService);
+    const { cpf } = request.params;
+
+    if (!cpf) {
+      throw new AppError('CPF não fornecido');
+    }
+
+    const clients = await findClientByCPFService.execute(cpf);
 
     return response.status(200).json(clients);
   }
