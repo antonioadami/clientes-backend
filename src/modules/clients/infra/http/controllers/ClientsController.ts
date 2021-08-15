@@ -9,7 +9,7 @@ export default class ClientsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const createClientService = container.resolve(CreateClientService);
 
-    const { name, email, password, cpf, phone } = request.body;
+    const { name, email, password, cpf, phone, age } = request.body;
 
     if (!name || !email || !password || !cpf || !phone) {
       throw new AppError('Missing data');
@@ -21,6 +21,7 @@ export default class ClientsController {
       password,
       cpf,
       phone,
+      age,
     });
 
     return response.status(200).json(client);
@@ -40,7 +41,7 @@ export default class ClientsController {
   public async update(request: Request, response: Response): Promise<Response> {
     const updateClientService = container.resolve(UpdateClientService);
 
-    const { name, email, password, phone } = request.body;
+    const { name, email, password, phone, age } = request.body;
     const { cpf } = request.params;
 
     if (!cpf) {
@@ -57,6 +58,7 @@ export default class ClientsController {
       password,
       cpf,
       phone,
+      age,
     });
 
     return response.status(200).json(client);

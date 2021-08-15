@@ -26,6 +26,8 @@ export default class ClientsRepository implements IClientsRepository {
     data.phone && aux.push('c.phone=$phone');
     // eslint-disable-next-line no-unused-expressions
     data.password && aux.push('c.password=$password');
+    // eslint-disable-next-line no-unused-expressions
+    data.age && aux.push('c.age=$age');
 
     const result = await session.run(
       `MATCH(c: Client{cpf: $cpf}) SET ${aux.toString()} RETURN c`,

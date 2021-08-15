@@ -22,6 +22,7 @@ export default class UpdateClientService {
     password,
     cpf,
     phone,
+    age,
   }: ICreateClientDTO): Promise<IClientModel> {
     const checkClientExists = await this.clientsRepository.findByCPF(cpf);
 
@@ -40,6 +41,7 @@ export default class UpdateClientService {
       password: hashedPassword,
       cpf,
       phone,
+      age,
     });
 
     delete client.password;
