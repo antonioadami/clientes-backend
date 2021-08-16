@@ -1,8 +1,7 @@
-import ICreateClientDTO from '@modules/clients/dtos/ICreateClientDTO';
-import IClientModel from '@modules/clients/models/IClientModel';
-import IClientsRepository from '@modules/clients/repositories/IClientsRepository';
-
-import session from '@shared/infra/neo4j-driver/index';
+import session from '../../../../../shared/infra/neo4j-driver/index';
+import ICreateClientDTO from '../../../dtos/ICreateClientDTO';
+import IClientModel from '../../../models/IClientModel';
+import IClientsRepository from '../../../repositories/IClientsRepository';
 
 export default class ClientsRepository implements IClientsRepository {
   public async create(data: ICreateClientDTO): Promise<IClientModel> {

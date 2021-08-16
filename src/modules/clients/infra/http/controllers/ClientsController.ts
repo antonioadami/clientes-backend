@@ -2,13 +2,12 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { differenceInYears } from 'date-fns';
 
-import AppError from '@shared/errors/AppError';
-
-import CreateClientService from '@modules/clients/services/CreateClientService';
-import ListAllClientsService from '@modules/clients/services/ListAllClientsService';
-import UpdateClientService from '@modules/clients/services/UpdateClientService';
-import DeleteClientService from '@modules/clients/services/DeleteClientService';
-import FindClientByCPFService from '@modules/clients/services/FindClientByCPFService';
+import ListAllClientsService from '../../../services/ListAllClientsService';
+import UpdateClientService from '../../../services/UpdateClientService';
+import DeleteClientService from '../../../services/DeleteClientService';
+import FindClientByCPFService from '../../../services/FindClientByCPFService';
+import CreateClientService from '../../../services/CreateClientService';
+import AppError from '../../../../../shared/errors/AppError';
 
 export default class ClientsController {
   public async create(request: Request, response: Response): Promise<Response> {
