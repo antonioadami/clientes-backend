@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --inspect --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "start": "tsc && node dist/shared/infra/http/server.js",
-    "tsc": "tsc",
+    "start": "node dist/shared/infra/http/server.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Antonio Adami",
