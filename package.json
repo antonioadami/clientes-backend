@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A simple CRUD to register clients",
   "main": "index.js",
+  "engines": {
+    "node": "14.x",
+    "npm": "7.x"
+  },
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --inspect --ignore-watch node_modules src/shared/infra/http/server.ts",
     "start": "node dist/shared/infra/http/server.js",
