@@ -35,7 +35,7 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   });
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   // eslint-disable-next-line no-console
   console.log(`server is listening on ${port}`);
 });
