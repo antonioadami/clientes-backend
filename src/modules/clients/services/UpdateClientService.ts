@@ -19,10 +19,10 @@ export default class UpdateClientService {
   public async execute({
     name,
     email,
-    password,
     cpf,
     phone,
     age,
+    birth,
   }: ICreateClientDTO): Promise<IClientModel> {
     const checkClientExists = await this.clientsRepository.findByCPF(cpf);
 
@@ -30,18 +30,13 @@ export default class UpdateClientService {
       throw new AppError('Client CPF does not exists');
     }
 
-    let hashedPassword: string = null;
-    if (password) {
-      hashedPassword = await this.hashProvider.generateHash(password);
-    }
-
     const client = await this.clientsRepository.update({
       name,
       email,
-      password: hashedPassword,
       cpf,
       phone,
       age,
+      birth,
     });
 
     delete client.password;

@@ -7,7 +7,7 @@ import session from '@shared/infra/neo4j-driver/index';
 export default class ClientsRepository implements IClientsRepository {
   public async create(data: ICreateClientDTO): Promise<IClientModel> {
     const result = await session.run(
-      'CREATE(c: Client{name: $name, email: $email, password: $password, cpf: $cpf, phone: $phone, age: $age}) RETURN c',
+      'CREATE(c: Client{name: $name, email: $email, password: $password, cpf: $cpf, phone: $phone, age: $age, birth: $birth}) RETURN c',
       data,
     );
 
@@ -25,9 +25,9 @@ export default class ClientsRepository implements IClientsRepository {
     // eslint-disable-next-line no-unused-expressions
     data.phone && aux.push('c.phone=$phone');
     // eslint-disable-next-line no-unused-expressions
-    data.password && aux.push('c.password=$password');
-    // eslint-disable-next-line no-unused-expressions
     data.age && aux.push('c.age=$age');
+    // eslint-disable-next-line no-unused-expressions
+    data.age && aux.push('c.birth=$birth');
 
     const result = await session.run(
       `MATCH(c: Client{cpf: $cpf}) SET ${aux.toString()} RETURN c`,

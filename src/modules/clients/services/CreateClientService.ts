@@ -23,6 +23,7 @@ export default class CreateClientService {
     cpf,
     phone,
     age,
+    birth,
   }: ICreateClientDTO): Promise<IClientModel> {
     const checkClientExists = await this.clientsRepository.findByCPF(cpf);
 
@@ -39,6 +40,7 @@ export default class CreateClientService {
       cpf,
       phone,
       age,
+      birth,
     });
 
     delete client.password;

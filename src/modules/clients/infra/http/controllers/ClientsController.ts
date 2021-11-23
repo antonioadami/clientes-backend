@@ -17,7 +17,7 @@ export default class ClientsController {
     const { name, email, password, cpf, phone, birth } = request.body;
 
     if (!name || !email || !password || !cpf || !phone) {
-      throw new AppError('Missing data');
+      throw new AppError('Há dados não fornecidos');
     }
 
     const birthDate = new Date(birth);
@@ -32,6 +32,7 @@ export default class ClientsController {
       cpf,
       phone,
       age,
+      birth,
     });
 
     return response.status(200).json(client);
@@ -67,7 +68,7 @@ export default class ClientsController {
   public async update(request: Request, response: Response): Promise<Response> {
     const updateClientService = container.resolve(UpdateClientService);
 
-    const { name, email, password, phone, birth } = request.body;
+    const { name, email, phone, birth } = request.body;
     const { cpf } = request.params;
 
     const birthDate = new Date(birth);
@@ -76,20 +77,20 @@ export default class ClientsController {
     const age = differenceInYears(today, birthDate);
 
     if (!cpf) {
-      throw new AppError('Missing CPF');
+      throw new AppError('CPF não fornecido');
     }
 
-    if (!name && !email && !password && !phone) {
-      throw new AppError('A property must be provided');
+    if (!name && !email && !phone && birth) {
+      throw new AppError('Você deve fornecer algum dado');
     }
 
     const client = await updateClientService.execute({
       name,
       email,
-      password,
       cpf,
       phone,
       age,
+      birth,
     });
 
     return response.status(200).json(client);
