@@ -4,5 +4,5 @@ export default interface ICreateAddressDTO {
   street: string;
   number: string;
   neighborhood: string;
-  client_cpf: number;
+  client_cpf: string;
 }
