@@ -9,6 +9,7 @@ import ListAllClientsService from '@modules/clients/services/ListAllClientsServi
 import UpdateClientService from '@modules/clients/services/UpdateClientService';
 import DeleteClientService from '@modules/clients/services/DeleteClientService';
 import FindClientByCPFService from '@modules/clients/services/FindClientByCPFService';
+import CountClientsService from '@modules/clients/services/CountClientsService';
 
 export default class ClientsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -44,10 +45,15 @@ export default class ClientsController {
     response: Response,
   ): Promise<Response> {
     const listAllClientsService = container.resolve(ListAllClientsService);
+    const countClientsService = container.resolve(CountClientsService);
 
     const clients = await listAllClientsService.execute();
 
-    return response.status(200).json(clients);
+    const count = await countClientsService.execute();
+
+    const ans = { count, clients };
+
+    return response.status(200).json(ans);
   }
 
   public async findByCPF(

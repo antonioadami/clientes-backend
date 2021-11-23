@@ -38,6 +38,14 @@ export default class ClientsRepository implements IClientsRepository {
     return client;
   }
 
+  public async count(): Promise<number> {
+    const result = await session.run(
+      'MATCH(c: Client) RETURN COUNT(c) as count',
+    );
+
+    return result.records[0].get('count').toNumber();
+  }
+
   public async findByCPF(cpf: string): Promise<IClientModel> {
     const result = await session.run('MATCH(c: Client{cpf: $cpf}) RETURN c', {
       cpf,
