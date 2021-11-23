@@ -11,6 +11,8 @@ export default class DeleteClientService {
   ) {}
 
   public async execute(cpf: string): Promise<string> {
+    console.log(cpf);
+
     const deletedCPF = await this.clientsRepository.delete(cpf);
 
     if (!deletedCPF) {

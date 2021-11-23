@@ -16,11 +16,12 @@ export default class ClientsController {
 
     const { name, email, password, cpf, phone, birth } = request.body;
 
-    if (!name || !email || !password || !cpf || !phone) {
+    if (!name || !email || !password || !cpf || !phone || !birth) {
       throw new AppError('Há dados não fornecidos');
     }
 
     const birthDate = new Date(birth);
+
     const today = new Date().setHours(0, 0, 0, 0);
 
     const age = differenceInYears(today, birthDate);
