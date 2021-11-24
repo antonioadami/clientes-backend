@@ -1,4 +1,7 @@
+import neo4j from 'neo4j-driver';
+
 import ICreateClientDTO from '@modules/clients/dtos/ICreateClientDTO';
+import IFindPaginatedDTO from '@modules/clients/dtos/IFindPaginatedDTO';
 import IClientModel from '@modules/clients/models/IClientModel';
 import IClientsRepository from '@modules/clients/repositories/IClientsRepository';
 
@@ -65,9 +68,19 @@ export default class ClientsRepository implements IClientsRepository {
     return clients;
   }
 
+  public async findPaginated(data: IFindPaginatedDTO): Promise<IClientModel[]> {
+    const result = await session.run(
+      'MATCH (c: Client) RETURN c SKIP $skip LIMIT $limit',
+      { skip: neo4j.int(data.skip), limit: neo4j.int(data.limit) },
+    );
+
+    const clients = result.records.map(client => client.get(0).properties);
+    return clients;
+  }
+
   public async delete(cpf: string): Promise<string> {
     const result = await session.run(
-      'MATCH (c: Client{cpf: $cpf}) DELETE c RETURN c',
+      'MATCH (c: Client{cpf: $cpf})-[r:MORA]->(a:Address) DETACH DELETE c, a RETURN c, a',
       {
         cpf,
       },

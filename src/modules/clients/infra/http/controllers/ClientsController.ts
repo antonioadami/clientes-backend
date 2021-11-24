@@ -10,6 +10,7 @@ import UpdateClientService from '@modules/clients/services/UpdateClientService';
 import DeleteClientService from '@modules/clients/services/DeleteClientService';
 import FindClientByCPFService from '@modules/clients/services/FindClientByCPFService';
 import CountClientsService from '@modules/clients/services/CountClientsService';
+import ListClientsPaginated from '@modules/clients/services/ListClientsPaginated';
 
 export default class ClientsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -44,10 +45,19 @@ export default class ClientsController {
     request: Request,
     response: Response,
   ): Promise<Response> {
+    const { limit, page } = request.query;
+
     const listAllClientsService = container.resolve(ListAllClientsService);
+    const listClientsPaginated = container.resolve(ListClientsPaginated);
     const countClientsService = container.resolve(CountClientsService);
 
-    const clients = await listAllClientsService.execute();
+    let clients = [];
+
+    if (limit && page) {
+      clients = await listClientsPaginated.execute({ limit, page });
+    } else {
+      clients = await listAllClientsService.execute();
+    }
 
     const count = await countClientsService.execute();
 
